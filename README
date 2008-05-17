@@ -16,6 +16,7 @@ It's simple:
      - mouse_active_motion(x, y)
      - mouse_passive_motion(x, y)
      - keyboard(key, modifiers)
+  4) call go_windowed(width, height)
 
 Look at the scripts in the examples/ directory.
 In fact, here's one:
