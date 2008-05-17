@@ -1,6 +1,7 @@
 A tiny wrapper for ruby-opengl
-It's like LittleCoder, but for OpenGL
-Write tiny applets without worrying about initialization crap
+Kinda-sorta like LittleCoder, or Processing
+For now, it just handles OpenGL initialization
+  (which is actually almost enough to make 3D fun)
 
 It's simple:
 
