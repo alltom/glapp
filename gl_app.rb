@@ -6,7 +6,12 @@ class GLApp
     @@instance
   end
 
-  def initialize(width, height, title = "")
+  def initialize(engine, width, height, title = "")
+    unless engine.is_a?(GLApp::Engine)
+      raise ArgumentError.new('Engine has to be a GLApp::Engine')
+    end
+
+    @engine = engine
     @width = width
     @height = height
     @title = title
@@ -16,22 +21,32 @@ class GLApp
   end
 
   def update(seconds)
+    @engine.update(seconds)
   end
 
-  def special_keyboard(key, modifiers)
-  end
-
-  def mouse_click(button, state, x, y)
-  end
-
-  def mouse_active_motion(x, y)
-  end
-
-  def mouse_passive_motion(x, y)
+  def draw
+    @engine.draw
   end
 
   def keyboard(key, modifiers)
-    exit if key == 27
+    # exit if key == 27
+    @engine.keyboard(key, modifiers)
+  end
+
+  def special_keyboard(key, modifiers)
+    @engine.special_keyboard(key, modifiers)
+  end
+
+  def mouse_click(button, state, x, y)
+    @engine.mouse_click(button, state, x, y)
+  end
+
+  def mouse_active_motion(x, y)
+    @engine.mouse_click(button, state, x, y)
+  end
+
+  def mouse_passive_motion(x, y)
+    @engine.mouse_passive_motion(x, y)
   end
 
   def resize(width, height)
@@ -55,18 +70,20 @@ class GLApp
   end
 
   def show
-    if glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
-      glutLeaveGameMode
+    if Glut.glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
+      Glut.glutLeaveGameMode
     end
 
     unless @window
-      glutInitWindowSize(@width, @height)
+      Glut.glutInitWindowSize(@width, @height)
       @window = glutCreateWindow(@title)
     end
 
-    setup_context
-    go unless running?
+    self.setup_context
+    self.go unless running?
   end
+
+  protected
 
   def go_fullscreen(width, height, title = "")
     init(width, height, title)
@@ -87,9 +104,8 @@ class GLApp
   end
 
   def go
-    setup
     @running = true
-    glutMainLoop
+    Glut.glutMainLoop
   end
 
   def running?
@@ -148,27 +164,8 @@ class GLApp
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
   end
-end
 
-=begin
-
-class GLApp
-  def initialize(engine)
-    @engine = engine
-    $gl_app = self
-  end
-
-  def show(width, height, title = "")
-    go_windowed(width, height, title = "")
-  end
-
-  def draw
-    @engine.draw
-  end
-
-  def update(seconds)
-    @engine.update(seconds)
+  class Engine
   end
 end
 
-=end
