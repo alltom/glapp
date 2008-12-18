@@ -32,7 +32,7 @@ class Triangle
   end
 end
 
-class TriangleDemo
+class TriangleDemo < GLApp::Engine
   def initialize
     @triangles = Triangle.boom(10)
   end
@@ -46,6 +46,6 @@ class TriangleDemo
   end
 end
 
-GLApp.new(TriangleDemo.new).show(800, 300, "Triangle Demo")
-
+app = GLApp.new(TriangleDemo.new, 800, 600, "Triangle demo")
+app.show
 
