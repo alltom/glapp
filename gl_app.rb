@@ -2,10 +2,6 @@ require 'rubygems'
 require 'opengl'
 
 class GLApp
-  def self.instance
-    @@instance
-  end
-
   def initialize(engine, width, height, title = "")
     unless engine.is_a?(GLApp::Engine)
       raise ArgumentError.new('Engine has to be a GLApp::Engine')
@@ -54,17 +50,19 @@ class GLApp
     height = 1.0 if height <= 0
 
     # Reset the coordinate system
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity
+    Gl.glMatrixMode(GL_PROJECTION)
+    Gl.glLoadIdentity
 
     # Set the viewport to be the entire window
-    glViewport(0, 0, width, height)
+    Gl.glViewport(0, 0, width, height)
 
     # Set the correct perspective
-    gluPerspective(45, width.to_f / height.to_f, 1, 1000)
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity
-    gluLookAt(0, 0, 5, 0, 0, -1, 0, 1, 0)
+    Glu.gluPerspective(45, width.to_f / height.to_f, 1, 1000)
+    Gl.glMatrixMode(GL_MODELVIEW)
+    Gl.glLoadIdentity
+    Glu.gluLookAt(0, 0, 5,
+              0, 0, -1,
+              0, 1, 0)
 
     @width, @height = width, height
   end
@@ -76,7 +74,7 @@ class GLApp
 
     unless @window
       Glut.glutInitWindowSize(@width, @height)
-      @window = glutCreateWindow(@title)
+      @window = Glut.glutCreateWindow(@title)
     end
 
     self.setup_context
@@ -166,6 +164,13 @@ class GLApp
   end
 
   class Engine
+    def update(seconds) end
+    def draw() end
+    def keyboard(key, modifiers) end
+    def special_keyboard(key, modifiers) end
+    def mouse_click(button, state, x, y) end
+    def mouse_active_motion(x, y) end
+    def mouse_passive_motion(x, y) end
   end
 end
 
