@@ -12,8 +12,7 @@ class GLApp
     @height = height
     @title = title
     @running = false
-    gl_init
-    @@instance = self
+    self.gl_init
   end
 
   def update(seconds)
@@ -50,17 +49,17 @@ class GLApp
     height = 1.0 if height <= 0
 
     # Reset the coordinate system
-    Gl.glMatrixMode(GL_PROJECTION)
-    Gl.glLoadIdentity
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity
 
     # Set the viewport to be the entire window
-    Gl.glViewport(0, 0, width, height)
+    glViewport(0, 0, width, height)
 
     # Set the correct perspective
-    Glu.gluPerspective(45, width.to_f / height.to_f, 1, 1000)
-    Gl.glMatrixMode(GL_MODELVIEW)
-    Gl.glLoadIdentity
-    Glu.gluLookAt(0, 0, 5,
+    gluPerspective(45, width.to_f / height.to_f, 1, 1000)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity
+    gluLookAt(0, 0, 5,
               0, 0, -1,
               0, 1, 0)
 
@@ -68,13 +67,13 @@ class GLApp
   end
 
   def show
-    if Glut.glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
-      Glut.glutLeaveGameMode
+    if glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
+      glutLeaveGameMode
     end
 
     unless @window
-      Glut.glutInitWindowSize(@width, @height)
-      @window = Glut.glutCreateWindow(@title)
+      glutInitWindowSize(@width, @height)
+      @window = glutCreateWindow(@title)
     end
 
     self.setup_context
@@ -84,26 +83,24 @@ class GLApp
   protected
 
   def go_fullscreen(width, height, title = "")
-    init(width, height, title)
-
     glutGameModeString([width, height].join("x"))
 
     if glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)
       glutEnterGameMode
       if glutGameModeGet(GLUT_GAME_MODE_ACTIVE) == 0
-        go_windowed
+        self.go_windowed
       end
     else
       go_windowed
     end
 
-    setup_context
-    go unless running?
+    self.setup_context
+    self.go unless self.running?
   end
 
   def go
     @running = true
-    Glut.glutMainLoop
+    glutMainLoop
   end
 
   def running?
