@@ -1,0 +1,38 @@
+h1. GLApp - A tiny wrapper for ruby-opengl
+
+It's simple:
+
+# require "gl_app"
+# Inherit GLApp::Engine
+
+  <pre><code>class MyGame < GLApp::Engine
+end</code></pre>
+# Override as many of the callbacks as you need:
+
+  * draw
+  * update(seconds)
+  * special_keyboard(key, modifiers)
+  * mouse_click(button, state, x, y)
+  * mouse_active_motion(x, y)
+  * mouse_passive_motion(x, y)
+  * keyboard(key, modifiers)
+# Instantiate GLApp with an instance of your engine, width, height and title, and do show.
+
+  <pre><code>app = GLApp.new(MyGame.new, 800, 600, "My game")
+  app.show</code></pre>
+# Done!
+
+Look at the scripts in the examples/ directory.
+In fact, here's one:
+
+  require 'gl_app'
+
+  class MyGame < GLApp::Engine
+    def draw
+      glTranslate(0, 0, -5)
+      glutSolidCube(2)
+    end
+  end
+
+  app = GLApp.new(MyGame.new, 800, 600, "My game")
+  app.show
