@@ -24,12 +24,19 @@ class GLApp
   end
 
   def keyboard(key, modifiers)
-    # exit if key == 27
     @engine.keyboard(key, modifiers)
+  end
+
+  def keyboard_up(key, modifiers)
+    @engine.keyboard_up(key, modifiers)
   end
 
   def special_keyboard(key, modifiers)
     @engine.special_keyboard(key, modifiers)
+  end
+
+  def special_keyboard_up(key, modifiers)
+    @engine.special_keyboard_up(key, modifiers)
   end
 
   def mouse_click(button, state, x, y)
@@ -119,6 +126,11 @@ class GLApp
 
     glutDisplayFunc(lambda do
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+      glMatrixMode(GL_PROJECTION)
+      glLoadIdentity
+      gluPerspective(30.0, @width / @height, 0.1, 1000.0)
+
+      glMatrixMode(GL_MODELVIEW)
       glLoadIdentity
       draw
       glutSwapBuffers
@@ -136,8 +148,16 @@ class GLApp
       keyboard(key, glutGetModifiers)
     end)
 
+    glutKeyboardUpFunc(lambda do |key, x, y|
+      keyboard_up(key, glutGetModifiers)
+    end)
+
     glutSpecialFunc(lambda do |key, x, y|
       special_keyboard(key, glutGetModifiers)
+    end)
+
+    glutSpecialUpFunc(lambda do |key, x, y|
+      special_keyboard_up(key, glutGetModifiers)
     end)
 
     glutMouseFunc(lambda do |button, state, x, y|
@@ -164,7 +184,9 @@ class GLApp
     def update(seconds) end
     def draw() end
     def keyboard(key, modifiers) end
+    def keyboard_up(key, modifiers) end
     def special_keyboard(key, modifiers) end
+    def special_keyboard_up(key, modifiers) end
     def mouse_click(button, state, x, y) end
     def mouse_active_motion(x, y) end
     def mouse_passive_motion(x, y) end
