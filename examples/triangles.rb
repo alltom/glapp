@@ -1,6 +1,5 @@
 require File.join(File.dirname(__FILE__), "..", "gl_app")
-include GLApp
-include Math
+
 
 def setup
   @triangles = Triangle.boom(10)
@@ -22,7 +21,7 @@ class Triangle
   end
   
   def self.boom(num)
-    slice = (2.0 * PI) / num.to_f
+    slice = (2.0 * Math::PI) / num.to_f
     (1..num).map { |i| Triangle.new(slice * i) }
   end
   
@@ -30,7 +29,7 @@ class Triangle
     glPushMatrix
       glTranslate 0, 0.5, -5
       glRotate 110, 1, 0, 0
-      glTranslate 3.0 * sin(@angle), 3.0 * cos(@angle), 0
+      glTranslate 3.0 * Math::sin(@angle), 3.0 * Math::cos(@angle), 0
       glRotate @angle * 90, 1, 1, 1
       glBegin GL_TRIANGLES
         glColor 1, 0, 0
@@ -46,4 +45,5 @@ class Triangle
   end
 end
 
-go_windowed 800, 300
+window = GLApp.new(800, 300)
+window.show

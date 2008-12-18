@@ -1,39 +1,77 @@
-require "rubygems"
-require "opengl"
+require 'rubygems'
+require 'opengl'
 
-module GlutWrapper
-  include Gl, Glu, Glut
+class GLApp
+  def self.instance
+    @@instance
+  end
 
-  # callback stubs ... override these in your code for fun!
-  def setup; end
-  def draw; end
-  def update(seconds); end # seconds since call
-  def special_keyboard(key, modifiers); end
-  def mouse_click(button, state, x, y); end
-  def mouse_active_motion(x, y); end
-  def mouse_passive_motion(x, y); end
-  def keyboard(key, modifiers); exit if key == 27; end
+  def initialize(width, height, title = "")
+    @width = width
+    @height = height
+    @title = title
+    @running = false
+    gl_init
+    @@instance = self
+  end
 
-  def go_windowed(width, height, title = "")
-    init(width, height, title)
+  def update(seconds)
+  end
 
+  def special_keyboard(key, modifiers)
+  end
+
+  def mouse_click(button, state, x, y)
+  end
+
+  def mouse_active_motion(x, y)
+  end
+
+  def mouse_passive_motion(x, y)
+  end
+
+  def keyboard(key, modifiers)
+    exit if key == 27
+  end
+
+  def resize(width, height)
+    # avoid divide-by-zero
+    height = 1.0 if height <= 0
+
+    # Reset the coordinate system
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity
+
+    # Set the viewport to be the entire window
+    glViewport(0, 0, width, height)
+
+    # Set the correct perspective
+    gluPerspective(45, width.to_f / height.to_f, 1, 1000)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity
+    gluLookAt(0, 0, 5, 0, 0, -1, 0, 1, 0)
+
+    @width, @height = width, height
+  end
+
+  def show
     if glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
       glutLeaveGameMode
     end
 
     unless @window
-      glutInitWindowSize(*@screen_size)
-      @window = glutCreateWindow(@window_title)
+      glutInitWindowSize(@width, @height)
+      @window = glutCreateWindow(@title)
     end
 
     setup_context
-    go unless going?
+    go unless running?
   end
 
   def go_fullscreen(width, height, title = "")
     init(width, height, title)
 
-    glutGameModeString(@screen_size.join("x"))
+    glutGameModeString([width, height].join("x"))
 
     if glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)
       glutEnterGameMode
@@ -45,26 +83,17 @@ module GlutWrapper
     end
 
     setup_context
-    go unless going?
-  end
-
-  attr_reader :screen_size
-
-  def init(width, height, title)
-    @screen_size = [width, height]
-    @window_title = title
-    @going = false
-    gl_init
+    go unless running?
   end
 
   def go
     setup
-    @going = true
+    @running = true
     glutMainLoop
   end
 
-  def going?
-    @going
+  def running?
+    @running
   end
 
   def gl_init
@@ -80,7 +109,7 @@ module GlutWrapper
     glutDisplayFunc(lambda do
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
       glLoadIdentity
-      $gl_app.draw
+      draw
       glutSwapBuffers
     end)
 
@@ -100,42 +129,30 @@ module GlutWrapper
       special_keyboard(key, glutGetModifiers)
     end)
 
-    glutMouseFunc(method(:mouse_click).to_proc)
-    glutMotionFunc(method(:mouse_active_motion).to_proc)
-    glutPassiveMotionFunc(method(:mouse_passive_motion).to_proc)
+    glutMouseFunc(lambda do |button, state, x, y|
+      mouse_click(button, state, x, y)
+    end)
 
-    glutReshapeFunc(method(:resize).to_proc)
+    glutMotionFunc(lambda do |x, y|
+      mouse_active_motion(x, y)
+    end)
+
+    glutPassiveMotionFunc(lambda do |x, y|
+      mouse_passive_motion(x, y)
+    end)
+
+    glutReshapeFunc(lambda do |width, height|
+      resize(width, height)
+    end)
 
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
   end
-
-  def resize(width, height)
-    # avoid divide-by-zero
-    height = 1.0 if height <= 0
-
-    # Reset the coordinate system
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity
-
-    # Set the viewport to be the entire window
-    glViewport(0, 0, *@screen_size)
-
-    # Set the correct perspective
-    gluPerspective(45, width.to_f / height.to_f, 1, 1000)
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity
-    gluLookAt(0, 0, 5, 0, 0, -1, 0, 1, 0)
-
-    @screen_size = [width, height]
-  end
 end
 
-include GlutWrapper
+=begin
 
 class GLApp
-  include Gl, Glu, Glut
-
   def initialize(engine)
     @engine = engine
     $gl_app = self
@@ -148,9 +165,10 @@ class GLApp
   def draw
     @engine.draw
   end
-  
+
   def update(seconds)
     @engine.update(seconds)
   end
 end
 
+=end
