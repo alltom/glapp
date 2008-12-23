@@ -5,7 +5,8 @@ It's simple:
 # require "gl_app"
 # Include GLApp::Engine
 
-  <pre><code>class MyGame; include GLApp::Engine
+  <pre><code>class MyGame
+  include GLApp::Engine
 end</code></pre>
 # Override as many of the callbacks as you need:
 
@@ -26,7 +27,7 @@ Look at the scripts in the examples/ directory.
 In fact, here's one:
 
   require 'gl_app'
-
+  
   class MyGame
     include GLApp::Engine
     def draw
@@ -34,6 +35,6 @@ In fact, here's one:
       glutSolidCube(2)
     end
   end
-
+  
   app = GLApp.new(MyGame.new, 800, 600, "My game")
   app.show
