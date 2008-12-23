@@ -35,7 +35,7 @@ end
 class TriangleDemo
   include GLApp::Engine
   
-  def initialize
+  def setup
     @triangles = Triangle.boom(10)
   end
 
