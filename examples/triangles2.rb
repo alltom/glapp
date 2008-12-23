@@ -1,3 +1,6 @@
+# the same demo as triangles.rb except all of the hook methods are in
+# the top-level instead of in a class
+
 require File.join(File.dirname(__FILE__), "..", "gl_app")
 include GLApp::Engine
 public
