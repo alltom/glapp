@@ -103,6 +103,7 @@ class GLApp
 
   def go
     @running = true
+    @engine.setup
     glutMainLoop
   end
 
@@ -178,6 +179,7 @@ class GLApp
   end
 
   module Engine
+    def setup() end
     def update(seconds) end
     def draw() end
     def keyboard(key, modifiers) end
