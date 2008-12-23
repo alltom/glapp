@@ -141,6 +141,7 @@ class GLApp
       @last_time ||= time
       delta = time - @last_time
       update(delta * 1000.0)
+      @last_time = time
       glutPostRedisplay
     end)
 
