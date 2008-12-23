@@ -35,7 +35,7 @@ class Triangle
 end
 
 def update(seconds)
-  @triangles.each { |tri| tri.angle += seconds/1000.0 }
+  @triangles.each { |tri| tri.angle += seconds }
 end
 
 def draw

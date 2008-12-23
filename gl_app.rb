@@ -20,7 +20,7 @@ class GLApp
   end
 
   def keyboard(key, modifiers)
-    @engine.keyboard(key, modifiers)
+    @engine.keyboard_down(key, modifiers)
   end
 
   def keyboard_up(key, modifiers)
@@ -28,7 +28,7 @@ class GLApp
   end
 
   def special_keyboard(key, modifiers)
-    @engine.special_keyboard(key, modifiers)
+    @engine.special_keyboard_down(key, modifiers)
   end
 
   def special_keyboard_up(key, modifiers)
@@ -137,7 +137,7 @@ class GLApp
       time = Time.now
       @last_time ||= time
       delta = time - @last_time
-      update(delta * 1000.0)
+      update(delta)
       @last_time = time
       glutPostRedisplay
     end)
@@ -182,9 +182,9 @@ class GLApp
     def setup() end
     def update(seconds) end
     def draw() end
-    def keyboard(key, modifiers) end
+    def keyboard_down(key, modifiers) end
     def keyboard_up(key, modifiers) end
-    def special_keyboard(key, modifiers) end
+    def special_keyboard_down(key, modifiers) end
     def special_keyboard_up(key, modifiers) end
     def mouse_click(button, state, x, y) end
     def mouse_active_motion(x, y) end
