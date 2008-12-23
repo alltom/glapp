@@ -20,7 +20,7 @@ end</code></pre>
 # Instantiate GLApp with an instance of your engine, width, height and title, and do show.
 
   <pre><code>app = GLApp.new(MyGame.new, 800, 600, "My game")
-  app.show</code></pre>
+app.show</code></pre>
 # Done!
 
 Look at the scripts in the examples/ directory.
