@@ -3,10 +3,6 @@ require 'opengl'
 
 class GLApp
   def initialize(engine, width, height, title = "")
-    unless engine.is_a?(GLApp::Engine)
-      raise ArgumentError.new('Engine has to be a GLApp::Engine')
-    end
-
     @engine = engine
     @width = width
     @height = height
@@ -181,7 +177,7 @@ class GLApp
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
   end
 
-  class Engine
+  module Engine
     def update(seconds) end
     def draw() end
     def keyboard(key, modifiers) end

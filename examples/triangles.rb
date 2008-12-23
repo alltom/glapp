@@ -14,25 +14,27 @@ class Triangle
   
   def draw
     glPushMatrix
-      glTranslate(0, 0.5, -5)
-      glRotate(110, 1, 0, 0)
-      glTranslate(3.0 * Math::sin(@angle), 3.0 * Math::cos(@angle), 0)
-      glRotate(@angle * 90, 1, 1, 1)
-      glBegin(GL_TRIANGLES)
-        glColor(1, 0, 0)
-        glVertex(0, 1, 0)
+      glTranslate 0, 0.5, -5
+      glRotate 110, 1, 0, 0
+      glTranslate 3.0 * Math::sin(@angle), 3.0 * Math::cos(@angle), 0
+      glRotate @angle * 90, 1, 1, 1
+      glBegin GL_TRIANGLES
+        glColor 1, 0, 0
+        glVertex 0, 1, 0
 
-        glColor(0, 1, 0)
-        glVertex(-1, -1, 0)
+        glColor 0, 1, 0
+        glVertex -1, -1, 0
 
-        glColor(0, 0, 1)
-        glVertex(1, -1, 0)
+        glColor 0, 0, 1
+        glVertex 1, -1, 0
       glEnd
     glPopMatrix
   end
 end
 
-class TriangleDemo < GLApp::Engine
+class TriangleDemo
+  include GLApp::Engine
+  
   def initialize
     @triangles = Triangle.boom(10)
   end
@@ -44,7 +46,11 @@ class TriangleDemo < GLApp::Engine
   def draw
     @triangles.each { |tri| tri.draw }
   end
+
+  def keyboard_up(key, modifiers)
+    exit if key == 27 # escape
+  end
 end
 
-window = GLApp.new(TriangleDemo.new, 800, 300)
-window.show
+app = GLApp.new(TriangleDemo.new, 800, 300, "Triangle demo")
+app.show

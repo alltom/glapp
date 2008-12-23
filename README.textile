@@ -3,9 +3,9 @@ h1. GLApp - A tiny wrapper for ruby-opengl
 It's simple:
 
 # require "gl_app"
-# Inherit GLApp::Engine
+# Include GLApp::Engine
 
-  <pre><code>class MyGame < GLApp::Engine
+  <pre><code>class MyGame; include GLApp::Engine
 end</code></pre>
 # Override as many of the callbacks as you need:
 
@@ -27,7 +27,8 @@ In fact, here's one:
 
   require 'gl_app'
 
-  class MyGame < GLApp::Engine
+  class MyGame
+    include GLApp::Engine
     def draw
       glTranslate(0, 0, -5)
       glutSolidCube(2)

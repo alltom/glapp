@@ -1,4 +1,6 @@
 require File.join(File.dirname(__FILE__), "..", "gl_app")
+include GLApp::Engine
+public
 
 class Triangle
   attr_accessor :angle
@@ -14,38 +16,36 @@ class Triangle
   
   def draw
     glPushMatrix
-      glTranslate 0, 0.5, -5
-      glRotate 110, 1, 0, 0
-      glTranslate 3.0 * Math::sin(@angle), 3.0 * Math::cos(@angle), 0
-      glRotate @angle * 90, 1, 1, 1
-      glBegin GL_TRIANGLES
-        glColor 1, 0, 0
-        glVertex 0, 1, 0
+      glTranslate(0, 0.5, -5)
+      glRotate(110, 1, 0, 0)
+      glTranslate(3.0 * Math::sin(@angle), 3.0 * Math::cos(@angle), 0)
+      glRotate(@angle * 90, 1, 1, 1)
+      glBegin(GL_TRIANGLES)
+        glColor(1, 0, 0)
+        glVertex(0, 1, 0)
 
-        glColor 0, 1, 0
-        glVertex -1, -1, 0
+        glColor(0, 1, 0)
+        glVertex(-1, -1, 0)
 
-        glColor 0, 0, 1
-        glVertex 1, -1, 0
+        glColor(0, 0, 1)
+        glVertex(1, -1, 0)
       glEnd
     glPopMatrix
   end
 end
 
-class TriangleDemo < GLApp::Engine
-  def initialize
-    @triangles = Triangle.boom(10)
-  end
-
-  def update(seconds)
-    @triangles.each { |tri| tri.angle += seconds/1000.0 }
-  end
-
-  def draw
-    @triangles.each { |tri| tri.draw }
-  end
+def update(seconds)
+  @triangles.each { |tri| tri.angle += seconds/1000.0 }
 end
 
-app = GLApp.new(TriangleDemo.new, 800, 600, "Triangle demo")
-app.show
+def draw
+  @triangles.each { |tri| tri.draw }
+end
 
+def keyboard_up(key, modifiers)
+  exit if key == 27 # escape
+end
+
+@triangles = Triangle.boom(10)
+
+GLApp.new(self, 800, 300).show
