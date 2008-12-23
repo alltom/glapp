@@ -18,7 +18,7 @@ end</code></pre>
   * special_keyboard_down(key, modifiers)
   * special_keyboard_up(key, modifiers)
   * mouse_click(button, state, x, y)
-  * mouse_active_motion(x, y)
+  * mouse_dragging_motion(x, y)
   * mouse_passive_motion(x, y)
 # Instantiate GLApp with an instance of your engine, width, height and title, and do show.
 
