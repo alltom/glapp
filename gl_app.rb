@@ -40,7 +40,7 @@ class GLApp
   end
 
   def mouse_active_motion(x, y)
-    @engine.mouse_click(button, state, x, y)
+    @engine.mouse_dragging_motion(x, y)
   end
 
   def mouse_passive_motion(x, y)
@@ -187,7 +187,7 @@ class GLApp
     def special_keyboard_down(key, modifiers) end
     def special_keyboard_up(key, modifiers) end
     def mouse_click(button, state, x, y) end
-    def mouse_active_motion(x, y) end
+    def mouse_dragging_motion(x, y) end
     def mouse_passive_motion(x, y) end
   end
 end
