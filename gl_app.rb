@@ -41,10 +41,12 @@ class GLApp
 
   def mouse_active_motion(x, y)
     @engine.mouse_dragging_motion(x, y)
+    @engine.mouse_motion(x, y)
   end
 
   def mouse_passive_motion(x, y)
     @engine.mouse_passive_motion(x, y)
+    @engine.mouse_motion(x, y)
   end
 
   def resize(width, height)
@@ -189,6 +191,7 @@ class GLApp
     def mouse_click(button, state, x, y) end
     def mouse_dragging_motion(x, y) end
     def mouse_passive_motion(x, y) end
+    def mouse_motion(x, y) end
   end
 end
 
