@@ -1,4 +1,6 @@
-require File.join(File.dirname(__FILE__), "..", "gl_app")
+require "rubygems"
+require "glapp"
+
 include GLApp::Engine
 public
 
