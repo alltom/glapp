@@ -28,11 +28,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.3}
   s.summary = %q{TODO}
   s.test_files = [
-    "examples/button.rb",
-     "examples/jeff.rb",
-     "examples/sprite.rb",
-     "examples/triangles.rb",
-     "examples/triangles2.rb"
   ]
 
   if s.respond_to? :specification_version then
