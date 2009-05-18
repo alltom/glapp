@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{glapp}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Lieber"]
@@ -29,9 +29,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.3}
   s.summary = %q{ruby-opengl wrapper for writing quick applets}
   s.test_files = [
-    "examples/button.rb",
-     "examples/jeff.rb",
-     "examples/sprite.rb",
+    "examples/sprite.rb",
      "examples/triangles.rb",
      "examples/triangles2.rb"
   ]
