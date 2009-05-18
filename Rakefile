@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "glapp"
-    gem.summary = %Q{TODO}
+    gem.summary = %Q{ruby-opengl wrapper for writing quick applets}
     gem.email = "tom@alltom.com"
     gem.homepage = "http://github.com/alltom/glapp"
     gem.authors = ["Tom Lieber"]
