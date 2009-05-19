@@ -2,12 +2,8 @@ h1. GLApp - A tiny wrapper for ruby-opengl
 
 It's simple:
 
-# require "gl_app"
-# Include GLApp::Engine
-
-  <pre><code>class MyGame
-  include GLApp::Engine
-end</code></pre>
+# require "glapp"
+# Include GLApp
 # Override as many of the callbacks as you need:
 
   * setup
@@ -20,24 +16,25 @@ end</code></pre>
   * mouse_click(button, state, x, y)
   * mouse_dragging_motion(x, y)
   * mouse_passive_motion(x, y)
-# Instantiate GLApp with an instance of your engine, width, height and title, and do show.
+# If you need more control, override the default behavior of these:
 
-  <pre><code>app = GLApp.new(MyGame.new, 800, 600, "My game")
-app.show</code></pre>
-# Done!
+  * setup_context
+  * pre_draw
+  * post_draw
+  * resize
+# Call show with width, height, title, and whether to be full-screen
 
 Look at the scripts in the examples/ directory.
 In fact, here's one:
 
-  require 'gl_app'
+  require 'glapp'
   
   class MyGame
-    include GLApp::Engine
+    include GLApp
     def draw
       glTranslate(0, 0, -5)
       glutSolidCube(2)
     end
   end
   
-  app = GLApp.new(MyGame.new, 800, 600, "My game")
-  app.show
+  MyGame.new.show 800, 600, "My Game"
