@@ -9,6 +9,7 @@ begin
     gem.email = "tom@alltom.com"
     gem.homepage = "http://github.com/alltom/glapp"
     gem.authors = ["Tom Lieber"]
+    gem.add_dependency("ruby-opengl", ">= 0.60.0")
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
