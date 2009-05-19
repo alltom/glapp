@@ -19,8 +19,6 @@ module GLApp
     wire
     glutMainLoop
   end
-
-  protected
   
   def go_windowed
     if glutGameModeGet(GLUT_GAME_MODE_ACTIVE) != 0
@@ -120,8 +118,6 @@ module GLApp
   end
   
   # end hooks
-  
-  private
   
   def wire
     glutDisplayFunc(lambda do
