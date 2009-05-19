@@ -34,7 +34,7 @@ class Triangle
 end
 
 class TriangleDemo
-  include GLApp::Engine
+  include GLApp
   
   def setup
     @triangles = Triangle.boom(10)
@@ -53,5 +53,4 @@ class TriangleDemo
   end
 end
 
-app = GLApp.new(TriangleDemo.new, 800, 300, "Triangle demo")
-app.show
+TriangleDemo.new.show 800, 300, "triangle demo"

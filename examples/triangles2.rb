@@ -4,8 +4,7 @@
 require "rubygems"
 require "glapp"
 
-include GLApp::Engine
-public
+include GLApp
 
 class Triangle
   attr_accessor :angle
@@ -53,4 +52,4 @@ end
 
 @triangles = Triangle.boom(10)
 
-GLApp.new(self, 800, 300).show
+show 800, 300, "triangle demo"

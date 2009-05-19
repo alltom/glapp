@@ -1,8 +1,7 @@
 require "rubygems"
 require "glapp"
 
-include GLApp::Engine
-public
+include GLApp
 
 class Texture
   attr_reader :num, :width, :height
@@ -157,15 +156,15 @@ def draw
   # change coordinate system to match screen pixels
   glMatrixMode(GL_PROJECTION)
   glLoadIdentity
-  glOrtho(0, 300, 300, 0, -1000, 1000)
+  glOrtho(0, width, height, 0, -1000, 1000)
   glMatrixMode(GL_MODELVIEW)
   glLoadIdentity
-
+  
   # draw a hedgehog in the center of the screen
   glPushMatrix
-    glTranslate(150, 150, 0)
+    glTranslate(width/2, height/2, 0)
     @sprites[@animator.frame].render
   glPopMatrix
 end
 
-GLApp.new(self, 300, 300).show
+show 300, 300, "sprite demo"
