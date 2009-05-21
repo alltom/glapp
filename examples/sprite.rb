@@ -152,14 +152,18 @@ def update(seconds)
   @animator.update(seconds)
 end
 
-def draw
+def pre_draw
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+  
   # change coordinate system to match screen pixels
   glMatrixMode(GL_PROJECTION)
   glLoadIdentity
   glOrtho(0, width, height, 0, -1000, 1000)
   glMatrixMode(GL_MODELVIEW)
   glLoadIdentity
-  
+end
+
+def draw
   # draw a hedgehog in the center of the screen
   glPushMatrix
     glTranslate(width/2, height/2, 0)
