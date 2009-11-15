@@ -44,6 +44,10 @@ module GLApp
     end
   end
   
+  def clear
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+  end
+  
   # begin hooks
 
   def setup_context
@@ -57,7 +61,6 @@ module GLApp
   end
   
   def pre_draw
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity
     gluPerspective(30.0, width / height, 0.1, 1000.0)
